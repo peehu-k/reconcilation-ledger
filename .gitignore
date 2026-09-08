@@ -1,0 +1,21 @@
+# runtime data
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/pdfs/*
+data/pagecache/*
+!data/pdfs/.gitkeep
+!data/pagecache/.gitkeep
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# env / local
+.env
+*.log
