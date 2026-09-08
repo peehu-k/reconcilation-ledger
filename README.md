@@ -134,6 +134,7 @@ Main endpoints: `POST /documents`, `GET /documents/{id}/summary`, `GET /facts?do
 
 ## Video Demo
 
+https://drive.google.com/file/d/1az2_4wo2q82aBLaUslGN9U4aZMBKjg8k/view?usp=sharing
 
 
 ## Approach
