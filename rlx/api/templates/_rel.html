@@ -1,0 +1,50 @@
+{% macro evidence(f) %}
+<div class="ev">
+  <div class="meta">
+    {{ f.doc_title }} &middot; PDF p.{{ f.page }}{% if f.printed and f.printed|string != f.page|string %} (printed {{ f.printed }}){% endif %}
+    {% if f.published_date %} &middot; {{ f.published_date }}{% endif %}
+    &middot; quote <span class="q-{{ f.quote_match }}">{{ f.quote_match }}</span>
+  </div>
+  <div class="val">{{ f.value_text }}</div>
+  <div class="meta">{{ f.entity }} - {{ f.attribute }}</div>
+  <blockquote>{{ f.quote }}</blockquote>
+  <div class="tags">
+    {% if f.period %}<code>period {{ f.period }}</code> {% endif %}
+    {% if f.as_of %}<code>as_of {{ f.as_of }}</code> {% endif %}
+    {% if f.estimate_status %}<code>{{ f.estimate_status }}</code> {% endif %}
+    {% if f.basis %}<code>basis {{ f.basis|join(',') }}</code> {% endif %}
+    {% if f.scope %}<code>scope {{ f.scope|join(',') }}</code> {% endif %}
+    {% if f.attributed_to %}<code>via {{ f.attributed_to }}</code> {% endif %}
+    {% if f.unit %}<code>{{ f.unit }}{% if f.currency %}/{{ f.currency }}{% endif %}</code> {% endif %}
+    <code>conf {{ '%.2f'|format(f.confidence or 0) }}</code>
+    {% if f.sanity_flags %}<code style="color:#b4232a">{{ f.sanity_flags|join(',') }}</code>{% endif %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro relation(r) %}
+<div class="rel {{ r.bucket }}">
+  <div class="head">
+    <span class="pill {{ r.bucket }}">{{ r.bucket }}</span>
+    <span class="rule">{{ r.rule_code }}</span>
+    <span class="muted">{{ r.entity }} - {{ r.attribute }}</span>
+    <span class="muted">conf {{ '%.2f'|format(r.confidence or 0) }}</span>
+  </div>
+  <div class="expl">{{ r.explanation }}{% if r.explanation_source=='llm' %} <span class="muted">(phrased by LLM)</span>{% endif %}</div>
+  <div class="pair">
+    {{ evidence(r.a) }}
+    {{ evidence(r.b) }}
+  </div>
+  <details class="trace"><summary>rule trace</summary>
+    <ol>
+    {% for step in r.trace %}
+      <li><code class="k">{{ step.step }}</code>
+        {% if 'result' in step %}&rarr; {{ step.result }}{% if step.rel_diff is not none %} (rel_diff {{ '%.4f'|format(step.rel_diff) }}){% endif %}{% endif %}
+        {% if 'applies' in step %}&rarr; {{ 'APPLIES' if step.applies else 'no' }}{% endif %}
+        {% if step.note %} <span class="muted">{{ step.note }}</span>{% endif %}
+      </li>
+    {% endfor %}
+    </ol>
+  </details>
+</div>
+{% endmacro %}

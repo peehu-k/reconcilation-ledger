@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% import "_rel.html" as m %}
+{% block body %}
+<h2>Unresolved / review queue</h2>
+<p class="muted">The system routes things here instead of guessing: quotes it could not
+re-verify, malformed extractions, sanity-flagged facts, and pairs that differ with no
+rule to explain them at low confidence.</p>
+
+<h3>Rejected proposals - quote could not be verified ({{ rejected|length }})</h3>
+{% if rejected %}
+<table>
+  <tr><th>Doc</th><th>Pg</th><th>Proposed value</th><th>Attribute</th><th>Un-verifiable quote</th><th>guard score</th></tr>
+  {% for r in rejected %}
+  <tr>
+    <td>{{ r.title }}</td><td>{{ r.page_no }}</td>
+    <td>{{ r.payload_obj.get('value_text','') }}</td>
+    <td>{{ r.payload_obj.get('attribute_label','') }}</td>
+    <td class="muted">{{ r.payload_obj.get('quote','')[:120] }}</td>
+    <td>{{ r.payload_obj.get('_quote_guard_score','') }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}<p class="muted">none</p>{% endif %}
+
+<h3>Extraction errors - malformed model output, chunk skipped ({{ errors|length }})</h3>
+{% if errors %}
+<table>
+  <tr><th>Doc</th><th>Pg</th><th>Error</th></tr>
+  {% for e in errors %}<tr><td>{{ e.title }}</td><td>{{ e.page_no }}</td><td class="muted">{{ e.error[:200] }}</td></tr>{% endfor %}
+</table>
+{% else %}<p class="muted">none</p>{% endif %}
+
+<h3>Facts held for review - sanity flag set ({{ flagged|length }})</h3>
+{% for f in flagged %}
+<div class="ev" style="margin:8px 0">
+  <div class="meta">{{ f.doc_title }} &middot; p.{{ f.page }} &middot; <span class="q-FAIL">{{ f.sanity_flags|join(', ') }}</span></div>
+  <div class="val">{{ f.value_text }}</div>
+  <div class="meta">{{ f.entity }} - {{ f.attribute }}</div>
+  <blockquote>{{ f.quote }}</blockquote>
+</div>
+{% else %}<p class="muted">none</p>{% endfor %}
+
+<h3>Unresolved relations ({{ relations|length }})</h3>
+{% for r in relations %}{{ m.relation(r) }}{% endfor %}
+{% endblock %}

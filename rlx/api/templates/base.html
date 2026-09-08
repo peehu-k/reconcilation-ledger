@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Reconciliation Ledger{% endblock %}</title>
+<style>
+  :root{
+    --bg:#fbfbfa; --fg:#1a1a1a; --muted:#666; --line:#e3e3e0; --card:#fff;
+    --corr:#1f7a3d; --corr-bg:#e9f6ee;
+    --cont:#b4232a; --cont-bg:#fbeceb;
+    --rec:#8a5a00;  --rec-bg:#fdf3e3;
+    --unr:#555;      --unr-bg:#eee;
+    --accent:#2456b8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+  header{border-bottom:1px solid var(--line);background:var(--card);padding:14px 22px;display:flex;gap:20px;align-items:baseline;flex-wrap:wrap}
+  header h1{font-size:16px;margin:0;font-weight:700}
+  header nav a{color:var(--accent);text-decoration:none;margin-right:14px;font-size:14px}
+  header nav a:hover{text-decoration:underline}
+  main{max-width:1080px;margin:0 auto;padding:22px}
+  h2{font-size:16px;margin:30px 0 10px;border-bottom:2px solid var(--fg);display:inline-block;padding-bottom:2px}
+  h3{font-size:14px;margin:18px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600}
+  .pill.corroborated{background:var(--corr-bg);color:var(--corr)}
+  .pill.contradiction{background:var(--cont-bg);color:var(--cont)}
+  .pill.reconciled{background:var(--rec-bg);color:var(--rec)}
+  .pill.unresolved{background:var(--unr-bg);color:var(--unr)}
+  .counts{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+  .count{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;min-width:96px}
+  .count b{display:block;font-size:20px}
+  .count span{font-size:12px;color:var(--muted)}
+  .rel{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:8px;padding:14px 16px;margin:12px 0}
+  .rel.corroborated{border-left-color:var(--corr)}
+  .rel.contradiction{border-left-color:var(--cont)}
+  .rel.reconciled{border-left-color:var(--rec)}
+  .rel.unresolved{border-left-color:var(--unr)}
+  .rel .head{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .rel .rule{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:#f2f2ef;padding:2px 7px;border-radius:5px}
+  .rel .expl{margin:6px 0 10px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:760px){.pair{grid-template-columns:1fr}}
+  .ev{border:1px solid var(--line);border-radius:7px;padding:10px 12px;background:#fcfcfb}
+  .ev .meta{font-size:12px;color:var(--muted);margin-bottom:5px}
+  .ev .val{font-weight:700;font-size:15px}
+  .ev blockquote{margin:8px 0 0;padding:7px 10px;border-left:3px solid var(--accent);background:#f6f8fc;font-size:13px;color:#333;white-space:pre-wrap}
+  .tags{margin-top:6px;font-size:12px;color:var(--muted)}
+  .tags code{background:#f2f2ef;padding:1px 5px;border-radius:4px}
+  .trace{margin-top:8px;font-size:12px;color:var(--muted)}
+  details summary{cursor:pointer}
+  table{border-collapse:collapse;width:100%;font-size:13px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+  th{background:#f4f4f2}
+  .q-exact{color:var(--corr)} .q-fuzzy{color:var(--rec)} .q-FAIL{color:var(--cont)}
+  .warn{background:#fff8e0;border:1px solid #e8d48a;border-radius:7px;padding:8px 12px;font-size:13px;margin:8px 0}
+  .muted{color:var(--muted)}
+  code.k{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Reconciliation Ledger</h1>
+  <nav>
+    <a href="/report">Overview &amp; 4 cases</a>
+    <a href="/view/facts">Facts</a>
+    <a href="/view/relations">Relations</a>
+    <a href="/view/unresolved">Unresolved</a>
+    <a href="/stats">JSON stats</a>
+  </nav>
+</header>
+<main>
+{% block body %}{% endblock %}
+</main>
+</body>
+</html>

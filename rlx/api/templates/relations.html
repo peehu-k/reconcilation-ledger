@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "_rel.html" as m %}
+{% block body %}
+<h2>Relations - {{ bucket }}</h2>
+<p>
+  <a href="/view/relations">all</a> &middot;
+  <a href="/view/relations?bucket=corroborated">corroborated</a> &middot;
+  <a href="/view/relations?bucket=contradiction">contradiction</a> &middot;
+  <a href="/view/relations?bucket=reconciled">reconciled</a> &middot;
+  <a href="/view/relations?bucket=unresolved">unresolved</a>
+</p>
+<p class="muted">{{ relations|length }} shown</p>
+{% for r in relations %}{{ m.relation(r) }}{% endfor %}
+{% endblock %}

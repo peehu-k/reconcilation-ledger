@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+<h2>Facts ({{ facts|length }})</h2>
+<p class="muted">Every row links to a verbatim quote from its source page. Quote-match column
+shows how the quote guard verified it (exact / fuzzy). Facts whose quote failed verification
+never reach this table.</p>
+<table>
+  <tr><th>Doc</th><th>Pg</th><th>Entity</th><th>Attribute</th><th>Value</th><th>norm</th><th>period</th><th>as_of</th><th>vintage</th><th>quote</th><th>conf</th></tr>
+  {% for f in facts %}
+  <tr>
+    <td>{{ f.doc_title }}</td>
+    <td>{{ f.page }}{% if f.printed and f.printed|string != f.page|string %}<br><span class="muted">pr.{{ f.printed }}</span>{% endif %}</td>
+    <td>{{ f.entity }}</td>
+    <td>{{ f.attribute }}<br><span class="muted k">{{ f.attribute_key }}</span></td>
+    <td><b>{{ f.value_text }}</b></td>
+    <td class="muted">{% if f.value_num is not none %}{{ '%.4g'|format(f.value_num) }} {{ f.unit }}{% if f.currency %}/{{ f.currency }}{% endif %}{% else %}-{% endif %}</td>
+    <td>{{ f.period or '' }}</td>
+    <td>{{ f.as_of or '' }}</td>
+    <td>{{ f.estimate_status or '' }}</td>
+    <td><span class="q-{{ f.quote_match }}">{{ f.quote_match }}</span><br><span class="muted">{{ f.quote[:70] }}</span></td>
+    <td>{{ '%.2f'|format(f.confidence or 0) }}{% if f.sanity_flags %}<br><span class="q-FAIL">{{ f.sanity_flags|join(',') }}</span>{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

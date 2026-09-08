@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "_rel.html" as m %}
+{% block body %}
+
+<h2>Overview</h2>
+<div class="counts">
+  {% for k in ['documents','facts','relations','corroborated','contradiction','reconciled','unresolved','rejected_facts','extraction_errors'] %}
+  <div class="count"><b>{{ counts[k] }}</b><span>{{ k.replace('_',' ') }}</span></div>
+  {% endfor %}
+</div>
+
+<table>
+  <tr><th>#</th><th>Document</th><th>Pages</th><th>Facts</th><th>Published</th><th>date source</th><th>status</th></tr>
+  {% for d in docs %}
+  <tr>
+    <td>{{ d.id }}</td><td>{{ d.title }}</td><td>{{ d.page_count }}</td><td>{{ d.facts }}</td>
+    <td>{{ d.published_date or '-' }}</td><td class="muted">{{ d.published_date_source }}</td>
+    <td>{{ d.job_status }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>The four required cases</h2>
+
+<h3>1 · Corroboration across documents</h3>
+{% if cases.corroboration %}{% for r in cases.corroboration %}{{ m.relation(r) }}{% endfor %}
+{% else %}<p class="muted">No cross-document corroboration in the ledger yet.</p>{% endif %}
+
+<h3>2 · Genuine / likely contradiction</h3>
+{% if cases.contradiction %}{% for r in cases.contradiction %}{{ m.relation(r) }}{% endfor %}
+{% else %}<p class="muted">No contradiction in the ledger yet.</p>{% endif %}
+
+<h3>3 · Apparent contradiction reconciled by context</h3>
+{% for r in cases.reconciled_vintage %}{{ m.relation(r) }}{% endfor %}
+{% for r in cases.reconciled_period %}{{ m.relation(r) }}{% endfor %}
+{% for r in cases.reconciled_basis %}{{ m.relation(r) }}{% endfor %}
+{% for r in cases.reconciled_temporal %}{{ m.relation(r) }}{% endfor %}
+{% if not (cases.reconciled_vintage or cases.reconciled_period or cases.reconciled_basis or cases.reconciled_temporal) %}
+<p class="muted">No reconciled apparent-contradiction in the ledger yet.</p>{% endif %}
+
+<h3>4 · Extraction / reasoning failure &amp; how it is handled</h3>
+<p class="muted">Every proposed fact whose quote could not be re-verified against the source is
+rejected (not asserted) and listed here. See the <a href="/view/unresolved">Unresolved</a> view for the full queue.</p>
+<div class="warn">
+  rejected proposals (quote could not be verified): <b>{{ counts.rejected_facts }}</b> &nbsp;|&nbsp;
+  extraction errors (malformed LLM output, chunk skipped): <b>{{ counts.extraction_errors }}</b> &nbsp;|&nbsp;
+  facts held for review (sanity flag): see Unresolved
+</div>
+
+{% endblock %}

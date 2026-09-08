@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reconciliation Ledger</title>
+<style>
+  :root{
+    --bg:#F7EFEE; --surface:#FFFDFC; --soft:#FAF5F3; --border:#E8DDD9;
+    --ink:#102F2C; --ink-2:#66615F;
+    --rose:#D79A9F; --rose-soft:#EFD7D9; --rose-ink:#8f4a4f;
+    --sage:#78917F; --sage-soft:#E4EBE6; --sage-ink:#3f5a46;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --r:11px; --r-sm:7px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--sans);
+    font-size:14px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:46px 40px 90px}
+  header{margin-bottom:30px}
+  .brand{font-family:var(--serif); font-weight:600; font-size:30px; letter-spacing:.2px; margin:0}
+  .tagline{margin:4px 0 0; color:var(--ink-2); font-size:14px}
+
+  .cards{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--r);
+    padding:26px 28px; min-height:250px;
+  }
+  #leftCard [data-when="empty"]{
+    border:1px dashed var(--border); border-radius:var(--r); margin:-8px; padding:26px 28px;
+    text-align:center;
+  }
+  .card-h{font-family:var(--serif); font-weight:600; font-size:19px; margin:0 0 8px}
+  .muted{color:var(--ink-2)}
+  .small{font-size:12.5px}
+  .center{text-align:center}
+  .ic{display:flex; align-items:center; justify-content:center; margin:6px auto 14px;
+      width:46px; height:46px; border-radius:50%; background:var(--soft); border:1px solid var(--border)}
+  .ic svg{width:22px; height:22px; stroke:var(--ink-2); fill:none; stroke-width:1.5}
+  .ic.rose{background:var(--rose-soft); border-color:var(--rose-soft)}
+  .ic.rose svg{stroke:var(--rose-ink)}
+
+  .btn{
+    font-family:var(--sans); font-size:13.5px; border:1px solid transparent; border-radius:var(--r-sm);
+    padding:9px 18px; cursor:pointer; transition:background .15s, border-color .15s;
+  }
+  .btn-rose{background:var(--rose); color:#fff}
+  .btn-rose:hover{background:#cf8b90}
+  .btn-rose-soft{background:var(--rose-soft); color:var(--rose-ink)}
+  .btn-rose-soft:hover{background:#e8c9cc}
+  .btn-plain{background:var(--soft); color:var(--ink); border-color:var(--border)}
+  .btn-plain:hover{background:#f2ebe8}
+
+  #leftCard [data-when="empty"] .btn-rose{margin:4px 0 12px}
+  .hint{color:var(--ink-2); font-size:13px; margin:0 0 22px}
+  .foot{font-size:12px; margin:14px 0 0}
+  .err{color:var(--rose-ink); font-size:12.5px; margin:10px 0 0}
+
+  #leftCard [data-when="file"]{text-align:center}
+  .fname{font-weight:600; margin:2px 0 3px; word-break:break-all}
+  .fmeta{font-size:12.5px; margin:0 0 16px}
+
+  /* right card / processing */
+  #rightCard [data-when="empty"]{text-align:center}
+  #rightCard [data-when="empty"] .card-h{text-align:left}
+  .pname{font-size:12.5px; color:var(--ink-2); margin:0 0 14px; word-break:break-all}
+  .checklist{list-style:none; margin:0; padding:0}
+  .checklist li{display:flex; align-items:center; gap:11px; padding:7px 0; font-size:13.5px}
+  .checklist .mk{flex:0 0 18px; width:18px; height:18px; border-radius:50%;
+      border:1.5px solid var(--border); display:inline-flex; align-items:center; justify-content:center}
+  .checklist li.done .mk{background:var(--sage-soft); border-color:var(--sage)}
+  .checklist li.done .mk::after{content:""; width:9px; height:5px; border-left:2px solid var(--sage-ink);
+      border-bottom:2px solid var(--sage-ink); transform:rotate(-45deg) translateY(-1px)}
+  .checklist li.active .mk{border-color:var(--rose); animation:pulse 1.1s infinite}
+  .checklist li.wait{color:var(--ink-2)}
+  .checklist li.fail .mk{background:var(--rose-soft); border-color:var(--rose)}
+  .checklist li.fail .mk::after{content:"!"; color:var(--rose-ink); font-size:12px; font-weight:700; line-height:1}
+  .checklist .lbl{flex:1}
+  .checklist .val{color:var(--ink-2); font-size:12.5px; white-space:nowrap}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(215,154,159,.5)}50%{box-shadow:0 0 0 5px rgba(215,154,159,0)}}
+
+  .bar{height:6px; background:var(--soft); border-radius:999px; overflow:hidden; margin:16px 0 6px; border:1px solid var(--border)}
+  .bar-fill{height:100%; width:34%; background:var(--sage);
+      background-image:linear-gradient(90deg,var(--rose),var(--sage)); transition:width .5s ease}
+  .bar.indeterminate .bar-fill{width:38%; animation:slide 1.3s ease-in-out infinite}
+  @keyframes slide{0%{margin-left:-38%}100%{margin-left:100%}}
+  .bar-note{margin:0}
+
+  .divider{border:none; border-top:1px solid var(--border); margin:36px 0}
+
+  .bottom{}
+  .placeholder{text-align:center; padding:44px 20px}
+  .placeholder .ic{width:52px; height:52px}
+  .ph-h{font-family:var(--serif); font-weight:600; font-size:18px; margin:6px 0 6px}
+  .placeholder .muted{max-width:440px; margin:0 auto}
+  .err-ph .ph-h{color:var(--rose-ink)}
+  .err-ph .btn{margin-top:16px}
+
+  /* results */
+  .results{opacity:0; transform:translateY(14px); transition:opacity .45s ease, transform .45s ease}
+  .results.in{opacity:1; transform:none}
+  .sec-h{font-family:var(--serif); font-weight:600; font-size:21px; margin:8px 0 4px}
+  .results > .muted{margin:0 0 18px}
+  .note{background:var(--soft); border:1px solid var(--border); border-radius:var(--r-sm);
+      padding:9px 13px; font-size:12.5px; color:var(--ink-2); margin:0 0 18px}
+
+  .stats{display:flex; flex-wrap:wrap; gap:12px; margin:6px 0 34px}
+  .stat{flex:1 1 118px; min-width:112px; background:var(--surface); border:1px solid var(--border);
+      border-radius:var(--r-sm); padding:13px 15px}
+  .stat b{display:block; font-size:25px; font-weight:600; letter-spacing:.3px}
+  .stat span{font-size:11.5px; color:var(--ink-2); text-transform:uppercase; letter-spacing:.05em}
+  .stat.pos b{color:var(--sage-ink)}
+  .stat.neg b{color:var(--rose-ink)}
+  .stat.dim{opacity:.7}
+
+  .ef-head{display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 14px; flex-wrap:wrap}
+  .ef-head .muted{margin:0}
+  .search{display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border);
+      border-radius:var(--r-sm); padding:7px 11px; min-width:240px}
+  .search svg{width:15px; height:15px; stroke:var(--ink-2); fill:none; stroke-width:1.6}
+  .search input{border:none; outline:none; background:transparent; font-family:var(--sans);
+      font-size:13px; color:var(--ink); width:100%}
+
+  .rejbox{border:1px solid var(--border); border-left:3px solid var(--rose); background:var(--soft);
+      border-radius:var(--r-sm); padding:12px 15px; margin:0 0 18px; font-size:13px}
+  .rejbox h4{margin:0 0 8px; font-size:13px; font-weight:600; color:var(--rose-ink)}
+  .rejbox ul{margin:0; padding-left:16px}
+  .rejbox li{margin:3px 0; color:var(--ink-2)}
+  .rejbox q{color:var(--ink)}
+
+  .table-scroll{overflow-x:auto}
+  table.facts{border-collapse:collapse; width:100%; font-size:13.5px}
+  table.facts th{
+    text-align:left; font-weight:600; font-size:11.5px; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--ink-2); padding:10px 14px; border-bottom:1px solid var(--border); background:var(--soft);
+  }
+  table.facts td{padding:13px 14px; border-bottom:1px solid var(--border); vertical-align:top}
+  table.facts tr.row{cursor:pointer; transition:background .12s}
+  table.facts tr.row:hover{background:var(--soft)}
+  .f-title{font-weight:600}
+  .f-values{color:var(--ink-2); margin-top:3px}
+  .f-values .arrow{color:var(--rose-ink); padding:0 6px}
+  .chev{transition:transform .18s; color:var(--ink-2)}
+  tr.row.open .chev{transform:rotate(90deg)}
+
+  .pill{display:inline-block; padding:3px 10px; border-radius:999px; font-size:12px; font-weight:600; white-space:nowrap}
+  .pill.corroborated{background:var(--sage-soft); color:var(--sage-ink)}
+  .pill.contradiction{background:var(--rose-soft); color:var(--rose-ink)}
+  .pill.reconciled{background:var(--soft); color:var(--ink); border:1px solid var(--border)}
+  .pill.unresolved,.pill.extracted{background:var(--soft); color:var(--ink-2); border:1px solid var(--border)}
+  .rule{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px; color:var(--ink-2)}
+
+  tr.detail > td{background:var(--soft); padding:0}
+  .detail-in{padding:16px 18px 20px}
+  .ev{border:1px solid var(--border); background:var(--surface); border-radius:var(--r-sm); padding:12px 14px; margin:8px 0}
+  .ev .meta{font-size:11.5px; color:var(--ink-2); margin-bottom:6px}
+  .ev blockquote{margin:0; padding:8px 11px; border-left:3px solid var(--rose); background:var(--soft);
+      font-size:12.5px; color:var(--ink); white-space:pre-wrap}
+  .ev .tags{margin-top:7px; font-size:11.5px; color:var(--ink-2)}
+  .ev .tags code{background:var(--soft); border:1px solid var(--border); padding:1px 5px; border-radius:4px; margin-right:5px}
+  .rel-blk{border:1px solid var(--border); border-radius:var(--r-sm); padding:11px 13px; margin:10px 0; background:var(--surface)}
+  .rel-blk .hd{display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:5px}
+  .rel-blk .expl{font-size:12.5px; margin:4px 0 8px}
+  .trace{list-style:none; margin:6px 0 0; padding:0; font-size:11.5px; color:var(--ink-2)}
+  .trace li{padding:2px 0}
+  .trace code{font-family:ui-monospace,Menlo,Consolas,monospace}
+  .trace .applies{color:var(--sage-ink); font-weight:600}
+
+  .empty-facts{text-align:center; color:var(--ink-2); padding:34px 10px; border:1px dashed var(--border); border-radius:var(--r-sm)}
+
+  [hidden]{display:none !important}
+
+  @media (max-width:820px){
+    .wrap{padding:34px 20px 70px}
+    .cards{grid-template-columns:1fr}
+    .brand{font-size:26px}
+    .ef-head{align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <h1 class="brand">Reconciliation Ledger</h1>
+    <p class="tagline">From Documents to Trusted Facts</p>
+  </header>
+
+  <section class="cards">
+    <!-- LEFT -->
+    <div class="card" id="leftCard">
+      <div data-when="empty">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div>
+        <h2 class="card-h">Upload a PDF</h2>
+        <p class="muted">Add a document to extract facts and reconcile with your existing knowledge base.</p>
+        <button class="btn btn-rose" id="chooseBtn" type="button">Choose file</button>
+        <p class="hint">or drag and drop a PDF here</p>
+        <p class="foot muted">Only PDF files are supported.</p>
+        <p class="err" id="pickErr" hidden></p>
+      </div>
+      <div data-when="file" hidden>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div>
+        <p class="fname" id="fname"></p>
+        <p class="fmeta muted" id="fmeta"></p>
+        <button class="btn btn-rose-soft" id="changeBtn" type="button">Change file</button>
+        <p class="foot muted">Only PDF files are supported.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="card" id="rightCard">
+      <div data-when="empty">
+        <h2 class="card-h">Processing</h2>
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+        <p class="muted center">No document is being processed.</p>
+        <p class="muted center small">Upload a PDF to begin.</p>
+      </div>
+      <div data-when="run" hidden>
+        <h2 class="card-h">Processing</h2>
+        <p class="pname" id="pname"></p>
+        <ul class="checklist" id="checklist">
+          <li data-k="read"><span class="mk"></span><span class="lbl">Reading PDF</span><span class="val"></span></li>
+          <li data-k="extract"><span class="mk"></span><span class="lbl">Extracting facts</span><span class="val"></span></li>
+          <li data-k="verify"><span class="mk"></span><span class="lbl">Verifying quotes</span><span class="val"></span></li>
+          <li data-k="link"><span class="mk"></span><span class="lbl">Normalizing &amp; linking</span><span class="val"></span></li>
+          <li data-k="ledger"><span class="mk"></span><span class="lbl">Updating ledger</span><span class="val"></span></li>
+        </ul>
+        <div class="bar indeterminate" id="bar"><div class="bar-fill" id="barFill"></div></div>
+        <p class="bar-note muted small" id="barNote"></p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="bottom">
+    <div class="placeholder" data-when="empty">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+      <h3 class="ph-h">Results will appear here</h3>
+      <p class="muted center">Once a document is processed, extracted facts and their relationships will be displayed here.</p>
+    </div>
+
+    <div class="placeholder" data-when="run" hidden>
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+      <h3 class="ph-h">Processing your document</h3>
+      <p class="muted center">This may take a few moments. The results will appear here once processing is complete.</p>
+    </div>
+
+    <div class="placeholder err-ph" data-when="error" hidden>
+      <h3 class="ph-h">Unable to process this document.</h3>
+      <p class="muted center" id="errMsg"></p>
+      <button class="btn btn-rose" id="retryBtn" type="button">Try again</button>
+    </div>
+
+    <div class="results" id="results" hidden>
+      <h2 class="sec-h">Results</h2>
+      <p class="muted">Key facts and relationships from the uploaded document.</p>
+      <p class="note" id="resNote" hidden></p>
+
+      <div class="stats" id="stats"></div>
+
+      <h2 class="sec-h">Extracted Facts</h2>
+      <div class="ef-head">
+        <p class="muted">Review the facts extracted from your document and their reconciliation results.</p>
+        <div class="search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="search" type="search" placeholder="Search facts&hellip;" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="rejbox" id="rejBox" hidden></div>
+
+      <div class="table-scroll">
+        <table class="facts" id="factsTable">
+          <thead><tr><th>Fact / Entity</th><th>Result</th><th>Details</th><th aria-hidden="true"></th></tr></thead>
+          <tbody id="factsBody"></tbody>
+        </table>
+      </div>
+      <p class="empty-facts" id="emptyFacts" hidden></p>
+    </div>
+  </section>
+</main>
+
+<input id="fileInput" type="file" accept="application/pdf,.pdf" hidden>
+
+<script>
+(() => {
+  "use strict";
+  const $ = s => document.querySelector(s);
+  const el = (t, cls, txt) => { const n = document.createElement(t); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+
+  const CARDS = {
+    left:  { empty: '#leftCard [data-when="empty"]',  file: '#leftCard [data-when="file"]' },
+    right: { empty: '#rightCard [data-when="empty"]', run:  '#rightCard [data-when="run"]' },
+    ph:    { empty: '.bottom .placeholder[data-when="empty"]',
+             run:   '.bottom .placeholder[data-when="run"]',
+             error: '.bottom .placeholder[data-when="error"]' },
+  };
+  const show = (sel, on) => { const n = $(sel); if (n) n.hidden = !on; };
+
+  function setState(s) {
+    document.body.dataset.state = s;
+    show(CARDS.left.empty,  s === 'empty');
+    show(CARDS.left.file,   s !== 'empty');
+    show(CARDS.right.empty, s === 'empty' || s === 'error');
+    show(CARDS.right.run,   s === 'run' || s === 'results');
+    show(CARDS.ph.empty,    s === 'empty');
+    show(CARDS.ph.run,      s === 'run');
+    show(CARDS.ph.error,    s === 'error');
+    const res = $('#results');
+    if (s === 'results') { res.hidden = false; requestAnimationFrame(() => res.classList.add('in')); }
+    else { res.hidden = true; res.classList.remove('in'); }
+  }
+
+  // ---- checklist ----
+  const STEPS = ['read', 'extract', 'verify', 'link', 'ledger'];
+  function checklistRunning() {
+    STEPS.forEach((k, i) => {
+      const li = $(`#checklist li[data-k="${k}"]`);
+      li.className = i === 0 ? 'active' : 'wait';
+      li.querySelector('.val').textContent = i === 0 ? 'Processing...' : 'Waiting...';
+    });
+    $('#bar').classList.add('indeterminate');
+    $('#barFill').style.width = '';
+    $('#barNote').textContent = '';
+  }
+  function checklistDone(rep, elapsed) {
+    const paused = rep.status === 'paused_llm';
+    const attempted = (rep.facts || 0) + (rep.rejected || 0);
+    const vals = {
+      read: (rep.page_count ? rep.page_count + ' pages' : ''),
+      extract: (rep.facts ?? 0) + ' facts' + (paused ? ' (partial)' : ''),
+      verify: attempted ? `${rep.facts}/${attempted} verified` : '0 verified',
+      link: (rep.relations ?? 0) + ' relations',
+      ledger: paused ? 'Partial' : 'Completed',
+    };
+    STEPS.forEach(k => {
+      const li = $(`#checklist li[data-k="${k}"]`);
+      li.className = (paused && (k === 'extract' || k === 'link')) ? 'done' : 'done';
+      li.querySelector('.val').textContent = vals[k];
+    });
+    $('#bar').classList.remove('indeterminate');
+    $('#barFill').style.width = paused ? '60%' : '100%';
+    $('#barNote').textContent =
+      (paused ? 'Stopped early - model unavailable; partial results kept. ' : '') +
+      `Completed in ${elapsed}s`;
+  }
+
+  // ---- helpers ----
+  const shortPeriod = p => !p ? '' : String(p).replace(/^FY:/, 'FY').replace(/^POINT:/, '').replace(/^CY:/, 'CY').replace(/^RANGE:/, '');
+  const bucketRank = { contradiction: 3, reconciled: 2, corroborated: 1, unresolved: 0 };
+  const fmtNum = n => (n == null ? '-' : String(n));
+  const esc = s => (s == null ? '' : String(s));
+
+  async function j(url) {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`${url} → HTTP ${r.status}`);
+    return r.json();
+  }
+
+  function parseErr(text, status) {
+    try {
+      const o = JSON.parse(text);
+      const m = o && (o.error || o.detail || o.message);
+      if (m) return typeof m === 'string' ? m : JSON.stringify(m);
+    } catch (_) {}
+    const t = (text || '').trim();
+    return t && t[0] !== '<' ? t.slice(0, 300) : `The server responded with HTTP ${status}.`;
+  }
+
+  // ---- render results ----
+  function renderStats(sum) {
+    const cards = [
+      ['Document', 1, ''],
+      ['Facts', sum.facts, ''],
+      ['Rejected', sum.rejected, sum.rejected > 0 ? 'neg' : 'dim'],
+      ['Relations', sum.relations, ''],
+      ['Corroborated', sum.corroborated, sum.corroborated > 0 ? 'pos' : 'dim'],
+      ['Contradictions', sum.contradiction, sum.contradiction > 0 ? 'neg' : 'dim'],
+      ['Reconciled', sum.reconciled, sum.reconciled > 0 ? '' : 'dim'],
+    ];
+    const box = $('#stats'); box.innerHTML = '';
+    for (const [label, val, cls] of cards) {
+      const d = el('div', 'stat' + (cls ? ' ' + cls : ''));
+      d.append(el('b', null, fmtNum(val)), el('span', null, label));
+      box.append(d);
+    }
+  }
+
+  function evidenceBlock(f) {
+    const wrap = el('div', 'ev');
+    const meta = el('div', 'meta');
+    let m = `${esc(f.doc_title)} · PDF p.${f.page ?? '?'}`;
+    if (f.printed != null && String(f.printed) !== String(f.page)) m += ` (printed ${f.printed})`;
+    m += ` · quote ${esc(f.quote_match)}`;
+    if (f.confidence != null) m += ` · confidence ${Number(f.confidence).toFixed(2)}`;
+    meta.textContent = m;
+    const bq = el('blockquote', null, f.quote || '(no quote)');
+    wrap.append(meta, bq);
+    const tags = el('div', 'tags');
+    const add = (k, v) => { if (v && (!Array.isArray(v) || v.length)) { const c = el('code', null, `${k} ${Array.isArray(v) ? v.join(',') : v}`); tags.append(c); } };
+    add('period', shortPeriod(f.period)); add('as_of', f.as_of); add('vintage', f.estimate_status);
+    add('basis', f.basis); add('scope', f.scope); add('via', f.attributed_to);
+    if (f.unit && f.unit !== 'text') add('unit', f.unit + (f.currency ? '/' + f.currency : ''));
+    if (f.sanity_flags && f.sanity_flags.length) { const c = el('code', null, 'flags ' + f.sanity_flags.join(',')); c.style.color = 'var(--rose-ink)'; tags.append(c); }
+    if (tags.childNodes.length) wrap.append(tags);
+    return wrap;
+  }
+
+  function traceList(trace) {
+    const ul = el('ul', 'trace');
+    (trace || []).forEach(step => {
+      const li = el('li');
+      const parts = [];
+      const code = el('code', null, step.step); li.append(code);
+      if ('result' in step && step.result != null) parts.push(' → ' + step.result + (step.rel_diff != null ? ` (rel_diff ${Number(step.rel_diff).toFixed(4)})` : ''));
+      if ('applies' in step) { const a = el('span', step.applies ? 'applies' : null, step.applies ? ' → APPLIES' : ' → no'); li.append(document.createTextNode('')); li.append(a); }
+      if (parts.length) li.append(document.createTextNode(parts.join('')));
+      if (step.note) li.append(el('span', null, '  ' + step.note));
+      ul.append(li);
+    });
+    return ul;
+  }
+
+  function relBlock(r, selfId) {
+    const other = (r.a && r.a.id === selfId) ? r.b : r.a;
+    const blk = el('div', 'rel-blk');
+    const hd = el('div', 'hd');
+    hd.append(el('span', 'pill ' + r.bucket, r.bucket));
+    hd.append(el('span', 'rule', r.rule_code || ''));
+    if (r.confidence != null) hd.append(el('span', 'rule', 'conf ' + Number(r.confidence).toFixed(2)));
+    blk.append(hd);
+    if (r.explanation) blk.append(el('div', 'expl', r.explanation));
+    if (other && other.id != null) blk.append(evidenceBlock(other));
+    const t = el('details');
+    const sm = el('summary', 'rule', 'rule trace'); t.append(sm);
+    t.append(traceList(r.trace));
+    blk.append(t);
+    return blk;
+  }
+
+  function renderFacts(facts, rels) {
+    const body = $('#factsBody');
+    body.innerHTML = '';
+    const relBy = new Map();
+    (rels || []).forEach(r => {
+      [r.a, r.b].forEach(f => { if (f && f.id != null) { if (!relBy.has(f.id)) relBy.set(f.id, []); relBy.get(f.id).push(r); } });
+    });
+
+    const table = $('#factsTable'), emptyEl = $('#emptyFacts');
+    if (!facts.length) {
+      table.hidden = true;
+      emptyEl.hidden = false;
+      emptyEl.textContent = 'No verifiable facts were extracted from this document.';
+      return;
+    }
+    table.hidden = false; emptyEl.hidden = true;
+
+    const rows = [];
+    facts.forEach(f => {
+      const frels = (relBy.get(f.id) || []).slice().sort((x, y) => (bucketRank[y.bucket] || 0) - (bucketRank[x.bucket] || 0));
+      const primary = frels[0];
+      const counterpart = primary ? ((primary.a && primary.a.id === f.id) ? primary.b : primary.a) : null;
+      const title = `${esc(f.attribute)}${f.period ? ' (' + shortPeriod(f.period) + ')' : ''}`;
+      const values = counterpart
+        ? `${esc(f.value_text)}<span class="arrow">↔</span>${esc(counterpart.value_text)}`
+        : esc(f.value_text);
+      const bucket = primary ? primary.bucket : 'extracted';
+      const pillTxt = primary ? bucket[0].toUpperCase() + bucket.slice(1) : 'Extracted';
+      const details = primary ? (primary.rule_code || '-') : '-';
+
+      const tr = el('tr', 'row');
+      tr.innerHTML =
+        `<td><div class="f-title">${title}</div><div class="f-values">${values}</div></td>` +
+        `<td><span class="pill ${bucket}">${pillTxt}</span></td>` +
+        `<td><span class="rule">${esc(details)}</span></td>` +
+        `<td><span class="chev">›</span></td>`;
+      tr._search = `${f.attribute} ${f.entity} ${f.value_text} ${counterpart ? counterpart.value_text : ''} ${pillTxt} ${details}`.toLowerCase();
+
+      const det = el('tr', 'detail'); det.hidden = true;
+      const cell = el('td'); cell.colSpan = 4;
+      const inner = el('div', 'detail-in');
+      inner.append(el('div', 'meta', 'Fact evidence'));
+      inner.append(evidenceBlock(f));
+      if (frels.length) {
+        inner.append(el('div', 'meta', `${frels.length} reconciliation${frels.length > 1 ? 's' : ''}`));
+        frels.forEach(r => inner.append(relBlock(r, f.id)));
+      } else {
+        inner.append(el('div', 'meta', 'No cross-document relationship for this fact.'));
+      }
+      cell.append(inner); det.append(cell);
+
+      tr.addEventListener('click', () => { tr.classList.toggle('open'); det.hidden = !det.hidden; });
+      rows.push([tr, det]);
+      body.append(tr, det);
+    });
+
+    const search = $('#search');
+    search.oninput = () => {
+      const q = search.value.trim().toLowerCase();
+      rows.forEach(([tr, det]) => {
+        const hit = !q || tr._search.includes(q);
+        tr.hidden = !hit;
+        if (!hit) { tr.classList.remove('open'); det.hidden = true; }
+      });
+    };
+    search.value = '';
+  }
+
+  async function renderRejected(docId, n) {
+    const box = $('#rejBox');
+    if (!n) { box.hidden = true; return; }
+    try {
+      const items = await j(`/documents/${docId}/rejected`);
+      if (!items.length) { box.hidden = true; return; }
+      box.innerHTML = '';
+      box.append(el('h4', null, `${items.length} proposal${items.length > 1 ? 's' : ''} rejected - quote could not be verified against the source`));
+      const ul = el('ul');
+      items.forEach(it => {
+        const li = el('li');
+        li.append(document.createTextNode(`${esc(it.value_text || it.attribute_label || 'proposal')} · p.${it.page_no} - `));
+        const q = el('q', null, it.quote || ''); li.append(q);
+        ul.append(li);
+      });
+      box.append(ul);
+      box.hidden = false;
+    } catch (_) { box.hidden = true; }
+  }
+
+  // ---- upload flow ----
+  const input = $('#fileInput');
+  let barTimer = null;
+
+  function isPdf(file) {
+    return file && (file.type === 'application/pdf' || /\.pdf$/i.test(file.name));
+  }
+  function fmtSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(0) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  function reset() {
+    if (barTimer) { clearInterval(barTimer); barTimer = null; }
+    input.value = '';
+    $('#pickErr').hidden = true;
+    $('#results').classList.remove('in');
+    setState('empty');
+  }
+
+  async function handleFile(file) {
+    $('#pickErr').hidden = true;
+    if (!isPdf(file)) {
+      if (document.body.dataset.state !== 'empty') { $('#results').classList.remove('in'); setState('empty'); }
+      const e = $('#pickErr'); e.textContent = 'Please choose a PDF file.'; e.hidden = false;
+      return;
+    }
+    $('#fname').textContent = file.name;
+    $('#pname').textContent = file.name;
+    $('#fmeta').textContent = `PDF · ${fmtSize(file.size)}`;
+    checklistRunning();
+    setState('run');
+
+    let elapsedNote = 0;
+    barTimer = setInterval(() => {
+      elapsedNote += 1;
+      if (elapsedNote === 15) $('#barNote').textContent = 'Large documents and local-model extraction can take a few minutes...';
+    }, 1000);
+
+    const t0 = performance.now();
+    const fd = new FormData();
+    fd.append('file', file, file.name);
+
+    try {
+      const res = await fetch('/documents', { method: 'POST', body: fd });
+      const text = await res.text();
+      if (!res.ok) throw new Error(parseErr(text, res.status));
+      const rep = JSON.parse(text);
+      const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
+      if (barTimer) { clearInterval(barTimer); barTimer = null; }
+
+      const docId = rep.doc_id;
+      const [sum, facts, rels] = await Promise.all([
+        j(`/documents/${docId}/summary`),
+        j(`/facts?doc=${docId}&limit=2000`),
+        j(`/relations?doc=${docId}`),
+      ]);
+
+      $('#fmeta').textContent = `PDF · ${sum.page_count || rep.page_count || '?'} pages · ${fmtSize(file.size)}`;
+      checklistDone(rep, elapsed);
+
+      const note = $('#resNote');
+      if (rep.status === 'exists') { note.textContent = 'This document was already in the ledger - showing its existing results.'; note.hidden = false; }
+      else if (rep.status === 'paused_llm') { note.textContent = 'The local model became unavailable during extraction; partial results are shown and the job can be resumed from the CLI.'; note.hidden = false; }
+      else note.hidden = true;
+
+      renderStats(sum);
+      renderFacts(facts, rels);
+      await renderRejected(docId, sum.rejected);
+      setState('results');
+    } catch (err) {
+      if (barTimer) { clearInterval(barTimer); barTimer = null; }
+      $('#errMsg').textContent = (err && err.message) ? err.message : 'Unexpected error.';
+      setState('error');
+    }
+  }
+
+  // ---- wiring ----
+  $('#chooseBtn').addEventListener('click', () => input.click());
+  $('#changeBtn').addEventListener('click', () => { reset(); input.click(); });
+  $('#retryBtn').addEventListener('click', reset);
+  input.addEventListener('change', () => { if (input.files[0]) handleFile(input.files[0]); });
+
+  const drop = $('#leftCard');
+  ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => {
+    e.preventDefault(); if (document.body.dataset.state === 'empty') drop.style.borderColor = 'var(--rose)';
+  }));
+  ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => {
+    e.preventDefault(); drop.style.borderColor = '';
+  }));
+  drop.addEventListener('drop', e => {
+    const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f && document.body.dataset.state === 'empty') handleFile(f);
+  });
+
+  // fresh load = clean empty state; no calls to /stats or /documents
+  setState('empty');
+})();
+</script>
+</body>
+</html>
