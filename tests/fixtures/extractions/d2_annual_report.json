@@ -1,0 +1,62 @@
+{
+  "title_contains": "delhivery-annual-report",
+  "_note": "Hand-verified extractions for the Delhivery FY24 Annual Report.",
+  "pages": {
+    "22": [
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "revenue from operations",
+       "value_text": "81,415.38 million", "unit_text": "million", "period_text": "FY24",
+       "basis_text": "consolidated basis",
+       "quote": "The revenue from operations on consolidated basis for FY24 stood at 81,415.38 million as against 72,253.01 million for FY23, registering a growth of 12.68%.",
+       "self_confidence": 0.9},
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "revenue from operations",
+       "value_text": "72,253.01 million", "unit_text": "million", "period_text": "FY23",
+       "basis_text": "consolidated basis",
+       "quote": "as against 72,253.01 million for FY23",
+       "self_confidence": 0.88}
+    ],
+    "4": [
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "revenue from services",
+       "value_text": "81,415Mn", "unit_text": "Mn", "period_text": "FY24",
+       "quote": "81,415Mn", "self_confidence": 0.75},
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "EBITDA margin",
+       "value_text": "1.6%", "unit_text": "%", "period_text": "FY24",
+       "quote": "1.6%", "self_confidence": 0.7},
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "EBITDA",
+       "value_text": "1,266Mn", "unit_text": "Mn", "period_text": "FY24",
+       "quote": "1,266Mn", "self_confidence": 0.72}
+    ],
+    "36": [
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "loss for the year",
+       "value_text": "2,491.86 million", "unit_text": "million", "period_text": "FY24",
+       "quote": "Loss for the year decreased to 2,491.86 million for FY24 from 10,077.79 million for FY23.",
+       "self_confidence": 0.8,
+       "_intent": "CASE 4 (b) - written without a minus sign because the label carries the sign. The sanity layer flags this 'sign_suspect' and routes it to review rather than asserting a positive profit."}
+    ],
+    "30": [
+      {"fact_kind": "attribute", "entity_text": "Delhivery Limited", "attribute_label": "corporate office address",
+       "value_text": "Plot No. 5, Sector-44, Gurugram, Haryana 122002",
+       "quote": "Plot No. 5, Sector-44, Gurugram, Haryana 122002", "self_confidence": 0.9},
+      {"fact_kind": "attribute", "entity_text": "Delhivery Limited", "attribute_label": "corporate identity number",
+       "value_text": "L63090DL2011PLC221234",
+       "quote": "CIN: L63090DL2011PLC221234", "self_confidence": 0.95}
+    ],
+    "51": [
+      {"fact_kind": "attribute", "entity_text": "Delhivery Limited", "attribute_label": "corporate address",
+       "value_text": "Plot No. 5, Sector 44, Gurugram, Haryana 122001",
+       "quote": "Plot No. 5, Sector 44, Gurugram, Haryana 122001", "self_confidence": 0.9}
+    ],
+    "49": [
+      {"fact_kind": "attribute", "entity_text": "Delhivery Limited", "attribute_label": "registered office address",
+       "value_text": "N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, IGI Airport, New Delhi 110037",
+       "quote": "N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, IGI Airport, New Delhi 110037",
+       "self_confidence": 0.9}
+    ],
+    "33": [
+      {"fact_kind": "status", "entity_text": "Suvir Suren Sujan", "attribute_label": "board membership",
+       "value_text": "resigned from the Board with effect from August 24, 2023",
+       "as_of_text": "August 24, 2023",
+       "quote": "Mr. Suvir Suren Sujan, Non-Executive Director, resigned from the Board with effect from August 24, 2023.",
+       "self_confidence": 0.9}
+    ]
+  }
+}

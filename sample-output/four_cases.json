@@ -1,0 +1,721 @@
+{
+  "counts": {
+    "documents": 6,
+    "facts": 28,
+    "raw_facts": 29,
+    "rejected_facts": 1,
+    "extraction_errors": 0,
+    "relations": 33,
+    "corroborated": 13,
+    "contradiction": 2,
+    "reconciled": 18,
+    "unresolved": 0
+  },
+  "four_cases": {
+    "corroboration": [
+      {
+        "bucket": "corroborated",
+        "rule": "EXACT",
+        "attribute": "real gdp growth",
+        "confidence": 0.727,
+        "explanation": "Independent sources agree: “6.5 per cent” (02-rbi-annual-report-2024-25-excerpt, p.8) and “6.5 percent” (03-imf-india-2025-article-iv-excerpt, p.3).",
+        "a": {
+          "value": "6.5 per cent",
+          "doc": "02-rbi-annual-report-2024-25-excerpt",
+          "page": 8,
+          "quote": "real gross domestic product (GDP)3 growth moderated to 6.5 per cent in 2024-25",
+          "quote_match": "exact",
+          "period": "FY:2024-25",
+          "as_of": "2025-03-31",
+          "vintage": null
+        },
+        "b": {
+          "value": "6.5 percent",
+          "doc": "03-imf-india-2025-article-iv-excerpt",
+          "page": 3,
+          "quote": "Following economic growth of 6.5 percent in FY2024/25",
+          "quote_match": "exact",
+          "period": "FY:2024-25",
+          "as_of": "2025-11-21",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "EQUAL",
+            "mode": "numeric",
+            "rel_diff": 0.0,
+            "note": ""
+          }
+        ]
+      },
+      {
+        "bucket": "corroborated",
+        "rule": "EXACT",
+        "attribute": "registered office address",
+        "confidence": 0.427,
+        "explanation": "Independent sources agree: “N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, Indira Gandhi International Airport, New Delhi 110037 Delhi, India” (01-delhivery-prospectus-2022-excerpt, p.1) and “N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, IGI Airport, New Delhi 110037” (02-delhivery-annual-report-fy24-excerpt, p.49).",
+        "a": {
+          "value": "N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, Indira Gandhi International Airport, New Delhi 110037 Delhi, India",
+          "doc": "01-delhivery-prospectus-2022-excerpt",
+          "page": 1,
+          "quote": "N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, Indira Gandhi International Airport, New Delhi 110037 Delhi, India",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2022-05-14",
+          "vintage": null
+        },
+        "b": {
+          "value": "N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, IGI Airport, New Delhi 110037",
+          "doc": "02-delhivery-annual-report-fy24-excerpt",
+          "page": 49,
+          "quote": "N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, IGI Airport, New Delhi 110037",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2024-08-08",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "EQUAL",
+            "mode": "string",
+            "rel_diff": null,
+            "note": "pin"
+          }
+        ]
+      },
+      {
+        "bucket": "corroborated",
+        "rule": "EXACT",
+        "attribute": "corporate office address",
+        "confidence": 0.427,
+        "explanation": "Independent sources agree: “Plot 5, Sector 44, Gurugram 122002” (01-delhivery-prospectus-2022-excerpt, p.1) and “Plot No. 5, Sector-44, Gurugram, Haryana 122002” (02-delhivery-annual-report-fy24-excerpt, p.30).",
+        "a": {
+          "value": "Plot 5, Sector 44, Gurugram 122002",
+          "doc": "01-delhivery-prospectus-2022-excerpt",
+          "page": 1,
+          "quote": "Plot 5, Sector 44, Gurugram 122002",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2022-05-14",
+          "vintage": null
+        },
+        "b": {
+          "value": "Plot No. 5, Sector-44, Gurugram, Haryana 122002",
+          "doc": "02-delhivery-annual-report-fy24-excerpt",
+          "page": 30,
+          "quote": "Plot No. 5, Sector-44, Gurugram, Haryana 122002",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2024-08-08",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "EQUAL",
+            "mode": "string",
+            "rel_diff": null,
+            "note": "pin"
+          }
+        ]
+      },
+      {
+        "bucket": "corroborated",
+        "rule": "EXACT",
+        "attribute": "revenue",
+        "confidence": 0.356,
+        "explanation": "Independent sources agree: “81,415Mn” (02-delhivery-annual-report-fy24-excerpt, p.4) and “8,142 Cr” (03-delhivery-q4-fy24-earnings-presentation, p.6).",
+        "a": {
+          "value": "81,415Mn",
+          "doc": "02-delhivery-annual-report-fy24-excerpt",
+          "page": 4,
+          "quote": "81,415Mn",
+          "quote_match": "exact",
+          "period": "FY:2023-24",
+          "as_of": "2024-08-08",
+          "vintage": null
+        },
+        "b": {
+          "value": "8,142 Cr",
+          "doc": "03-delhivery-q4-fy24-earnings-presentation",
+          "page": 6,
+          "quote": "8,142 Cr",
+          "quote_match": "exact",
+          "period": "FY:2023-24",
+          "as_of": "2024-05-11",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "EQUAL",
+            "mode": "numeric",
+            "rel_diff": 6.140997297961189e-05,
+            "note": ""
+          }
+        ]
+      }
+    ],
+    "contradiction": [
+      {
+        "bucket": "contradiction",
+        "rule": "NONE",
+        "attribute": "corporate office address",
+        "confidence": 0.315,
+        "explanation": "No contextual difference (period, scope, basis, unit, vintage) explains the gap: “Plot 5, Sector 44, Gurugram 122002” (01-delhivery-prospectus-2022-excerpt, p.1) vs “Plot No. 5, Sector 44, Gurugram, Haryana 122001” (02-delhivery-annual-report-fy24-excerpt, p.51).",
+        "a": {
+          "value": "Plot 5, Sector 44, Gurugram 122002",
+          "doc": "01-delhivery-prospectus-2022-excerpt",
+          "page": 1,
+          "quote": "Plot 5, Sector 44, Gurugram 122002",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2022-05-14",
+          "vintage": null
+        },
+        "b": {
+          "value": "Plot No. 5, Sector 44, Gurugram, Haryana 122001",
+          "doc": "02-delhivery-annual-report-fy24-excerpt",
+          "page": 51,
+          "quote": "Plot No. 5, Sector 44, Gurugram, Haryana 122001",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2024-08-08",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "DIFFERENT",
+            "mode": "string",
+            "rel_diff": null,
+            "note": "pin"
+          },
+          {
+            "step": "ROUNDING",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "UNIT_SCALE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "PERIOD",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "TEMPORAL_STATUS",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "ESTIMATE_VINTAGE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "SCOPE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "BASIS",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "IDENTIFIER_REVISION",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "ATTRIBUTION",
+            "applies": false,
+            "detail": {}
+          }
+        ]
+      },
+      {
+        "bucket": "contradiction",
+        "rule": "NONE",
+        "attribute": "corporate office address",
+        "confidence": 0.315,
+        "explanation": "No contextual difference (period, scope, basis, unit, vintage) explains the gap: “Plot No. 5, Sector-44, Gurugram, Haryana 122002” (02-delhivery-annual-report-fy24-excerpt, p.30) vs “Plot No. 5, Sector 44, Gurugram, Haryana 122001” (02-delhivery-annual-report-fy24-excerpt, p.51).",
+        "a": {
+          "value": "Plot No. 5, Sector-44, Gurugram, Haryana 122002",
+          "doc": "02-delhivery-annual-report-fy24-excerpt",
+          "page": 30,
+          "quote": "Plot No. 5, Sector-44, Gurugram, Haryana 122002",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2024-08-08",
+          "vintage": null
+        },
+        "b": {
+          "value": "Plot No. 5, Sector 44, Gurugram, Haryana 122001",
+          "doc": "02-delhivery-annual-report-fy24-excerpt",
+          "page": 51,
+          "quote": "Plot No. 5, Sector 44, Gurugram, Haryana 122001",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2024-08-08",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "DIFFERENT",
+            "mode": "string",
+            "rel_diff": null,
+            "note": "pin"
+          },
+          {
+            "step": "ROUNDING",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "UNIT_SCALE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "PERIOD",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "TEMPORAL_STATUS",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "ESTIMATE_VINTAGE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "SCOPE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "BASIS",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "IDENTIFIER_REVISION",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "ATTRIBUTION",
+            "applies": false,
+            "detail": {}
+          }
+        ]
+      }
+    ],
+    "reconciled_vintage": [
+      {
+        "bucket": "reconciled",
+        "rule": "ESTIMATE_VINTAGE",
+        "attribute": "real gdp growth",
+        "confidence": 0.65,
+        "explanation": "Same figure at different vintages: first_advance → later estimate; as-of 2025-01-30 vs 2025-03-31 - the number matured between publications, not a contradiction.",
+        "a": {
+          "value": "6.4 per cent",
+          "doc": "01-india-economic-survey-2024-25-excerpt",
+          "page": 4,
+          "quote": "As per the first advance estimates of national accounts, India’s real GDP is estimated to grow by 6.4 per cent in FY25.",
+          "quote_match": "exact",
+          "period": "FY:2024-25",
+          "as_of": "2025-01-30",
+          "vintage": "first_advance"
+        },
+        "b": {
+          "value": "6.5 per cent",
+          "doc": "02-rbi-annual-report-2024-25-excerpt",
+          "page": 8,
+          "quote": "real gross domestic product (GDP)3 growth moderated to 6.5 per cent in 2024-25",
+          "quote_match": "exact",
+          "period": "FY:2024-25",
+          "as_of": "2025-03-31",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "DIFFERENT",
+            "mode": "numeric",
+            "rel_diff": 0.015384615384615398,
+            "note": ""
+          },
+          {
+            "step": "ROUNDING",
+            "applies": false,
+            "detail": {
+              "rel_diff": 0.015384615384615398
+            }
+          },
+          {
+            "step": "UNIT_SCALE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "PERIOD",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "TEMPORAL_STATUS",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "ESTIMATE_VINTAGE",
+            "applies": true,
+            "detail": {
+              "status_a": "first_advance",
+              "status_b": null,
+              "as_of_a": "2025-01-30",
+              "as_of_b": "2025-03-31",
+              "days_apart": 60
+            }
+          }
+        ]
+      },
+      {
+        "bucket": "reconciled",
+        "rule": "ESTIMATE_VINTAGE",
+        "attribute": "foreign exchange reserves",
+        "confidence": 0.65,
+        "explanation": "Same figure at different vintages: as-of 2025-01-03 vs 2025-03-01 - the number matured between publications, not a contradiction.",
+        "a": {
+          "value": "USD 634.6 billion",
+          "doc": "01-india-economic-survey-2024-25-excerpt",
+          "page": 31,
+          "quote": "before moderating to USD 634.6 billion as on 3 January 2025",
+          "quote_match": "exact",
+          "period": "POINT:2025-01-03",
+          "as_of": "2025-01-03",
+          "vintage": null
+        },
+        "b": {
+          "value": "US$ 668.3 billion",
+          "doc": "02-rbi-annual-report-2024-25-excerpt",
+          "page": 12,
+          "quote": "ample forex reserves at US$ 668.3 billion (as at end-March 2025)",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2025-03-01",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "DIFFERENT",
+            "mode": "numeric",
+            "rel_diff": 0.05042645518479725,
+            "note": ""
+          },
+          {
+            "step": "ROUNDING",
+            "applies": false,
+            "detail": {
+              "rel_diff": 0.05042645518479725
+            }
+          },
+          {
+            "step": "UNIT_SCALE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "PERIOD",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "TEMPORAL_STATUS",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "ESTIMATE_VINTAGE",
+            "applies": true,
+            "detail": {
+              "status_a": null,
+              "status_b": null,
+              "as_of_a": "2025-01-03",
+              "as_of_b": "2025-03-01",
+              "days_apart": 57
+            }
+          }
+        ]
+      }
+    ],
+    "reconciled_period": [
+      {
+        "bucket": "reconciled",
+        "rule": "PERIOD",
+        "attribute": "revenue",
+        "confidence": 0.405,
+        "explanation": "The figures cover different periods: one is FY:2023-24, the other Q4 FY:2023-24.",
+        "a": {
+          "value": "8,142 Cr",
+          "doc": "03-delhivery-q4-fy24-earnings-presentation",
+          "page": 6,
+          "quote": "8,142 Cr",
+          "quote_match": "exact",
+          "period": "FY:2023-24",
+          "as_of": "2024-05-11",
+          "vintage": null
+        },
+        "b": {
+          "value": "2,076 Cr",
+          "doc": "03-delhivery-q4-fy24-earnings-presentation",
+          "page": 7,
+          "quote": "2,076 Cr",
+          "quote_match": "exact",
+          "period": "Q4 FY:2023-24",
+          "as_of": "2024-05-11",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "DIFFERENT",
+            "mode": "numeric",
+            "rel_diff": 0.7450257921886514,
+            "note": ""
+          },
+          {
+            "step": "ROUNDING",
+            "applies": false,
+            "detail": {
+              "rel_diff": 0.7450257921886514
+            }
+          },
+          {
+            "step": "UNIT_SCALE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "PERIOD",
+            "applies": true,
+            "detail": {
+              "period_a": "FY:2023-24",
+              "period_b": "Q4 FY:2023-24"
+            }
+          }
+        ]
+      },
+      {
+        "bucket": "reconciled",
+        "rule": "PERIOD",
+        "attribute": "ebitda",
+        "confidence": 0.36,
+        "explanation": "The figures cover different periods: one is FY:2023-24, the other FY:2022-23.",
+        "a": {
+          "value": "Rs. 127 Cr",
+          "doc": "03-delhivery-q4-fy24-earnings-presentation",
+          "page": 5,
+          "quote": "FY24 EBITDA increased by Rs. 578 Cr to Rs. 127 Cr from Rs. (452 Cr) in FY23",
+          "quote_match": "exact",
+          "period": "FY:2023-24",
+          "as_of": "2024-05-11",
+          "vintage": null
+        },
+        "b": {
+          "value": "Rs. (452 Cr)",
+          "doc": "03-delhivery-q4-fy24-earnings-presentation",
+          "page": 5,
+          "quote": "FY24 EBITDA increased by Rs. 578 Cr to Rs. 127 Cr from Rs. (452 Cr) in FY23",
+          "quote_match": "exact",
+          "period": "FY:2022-23",
+          "as_of": "2024-05-11",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "DIFFERENT",
+            "mode": "numeric",
+            "rel_diff": 1.2809734513274336,
+            "note": ""
+          },
+          {
+            "step": "ROUNDING",
+            "applies": false,
+            "detail": {
+              "rel_diff": 1.2809734513274336
+            }
+          },
+          {
+            "step": "UNIT_SCALE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "PERIOD",
+            "applies": true,
+            "detail": {
+              "period_a": "FY:2023-24",
+              "period_b": "FY:2022-23"
+            }
+          }
+        ]
+      }
+    ],
+    "reconciled_basis": [
+      {
+        "bucket": "reconciled",
+        "rule": "IDENTIFIER_REVISION",
+        "attribute": "corporate identity number",
+        "confidence": 0.356,
+        "explanation": "The identifiers are the same but for a format/prefix change (“U63090DL2011PLC221234” vs “L63090DL2011PLC221234”) between filings - a registration-status reclassification, not a conflicting value.",
+        "a": {
+          "value": "U63090DL2011PLC221234",
+          "doc": "01-delhivery-prospectus-2022-excerpt",
+          "page": 1,
+          "quote": "CORPORATE IDENTITY NUMBER: U63090DL2011PLC221234",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2022-05-14",
+          "vintage": null
+        },
+        "b": {
+          "value": "L63090DL2011PLC221234",
+          "doc": "02-delhivery-annual-report-fy24-excerpt",
+          "page": 30,
+          "quote": "CIN: L63090DL2011PLC221234",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2024-08-08",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "DIFFERENT",
+            "mode": "string",
+            "rel_diff": null,
+            "note": ""
+          },
+          {
+            "step": "ROUNDING",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "UNIT_SCALE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "PERIOD",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "TEMPORAL_STATUS",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "ESTIMATE_VINTAGE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "SCOPE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "BASIS",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "IDENTIFIER_REVISION",
+            "applies": true,
+            "detail": {
+              "similarity": 95.23809523809523
+            }
+          }
+        ]
+      }
+    ],
+    "reconciled_temporal": [
+      {
+        "bucket": "reconciled",
+        "rule": "TEMPORAL_STATUS",
+        "attribute": "board membership",
+        "confidence": 0.315,
+        "explanation": "The status changed over time: as of 2022-05-14 “Non-Executive Nominee Director”; as of 2023-08-24 “resigned from the Board with effect from August 24, 2023”.",
+        "a": {
+          "value": "Non-Executive Nominee Director",
+          "doc": "01-delhivery-prospectus-2022-excerpt",
+          "page": 30,
+          "quote": "Suvir Suren Sujan(3) Non-Executive Nominee Director",
+          "quote_match": "exact",
+          "period": null,
+          "as_of": "2022-05-14",
+          "vintage": null
+        },
+        "b": {
+          "value": "resigned from the Board with effect from August 24, 2023",
+          "doc": "02-delhivery-annual-report-fy24-excerpt",
+          "page": 33,
+          "quote": "Mr. Suvir Suren Sujan, Non-Executive Director, resigned from the Board with effect from August 24, 2023.",
+          "quote_match": "exact",
+          "period": "POINT:2023-08-24",
+          "as_of": "2023-08-24",
+          "vintage": null
+        },
+        "rule_trace": [
+          {
+            "step": "compare",
+            "result": "DIFFERENT",
+            "mode": "string",
+            "rel_diff": null,
+            "note": ""
+          },
+          {
+            "step": "ROUNDING",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "UNIT_SCALE",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "PERIOD",
+            "applies": false,
+            "detail": {}
+          },
+          {
+            "step": "TEMPORAL_STATUS",
+            "applies": true,
+            "detail": {
+              "older": "2022-05-14",
+              "newer": "2023-08-24"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

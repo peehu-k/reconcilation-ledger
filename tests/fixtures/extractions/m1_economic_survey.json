@@ -1,0 +1,19 @@
+{
+  "title_contains": "economic-survey",
+  "_note": "Hand-verified extractions for the India Economic Survey 2024-25 (published ~Jan 2025).",
+  "pages": {
+    "4": [
+      {"fact_kind": "numeric", "entity_text": "India", "attribute_label": "real GDP growth",
+       "value_text": "6.4 per cent", "unit_text": "per cent", "period_text": "FY25",
+       "estimate_status_text": "first advance estimates",
+       "quote": "As per the first advance estimates of national accounts, India’s real GDP is estimated to grow by 6.4 per cent in FY25.",
+       "self_confidence": 0.9}
+    ],
+    "31": [
+      {"fact_kind": "numeric", "entity_text": "India", "attribute_label": "foreign exchange reserves",
+       "value_text": "USD 634.6 billion", "unit_text": "billion", "as_of_text": "as on 3 January 2025",
+       "quote": "before moderating to USD 634.6 billion as on 3 January 2025",
+       "self_confidence": 0.9}
+    ]
+  }
+}

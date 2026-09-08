@@ -1,0 +1,12 @@
+{
+  "documents": 6,
+  "facts": 28,
+  "raw_facts": 29,
+  "rejected_facts": 1,
+  "extraction_errors": 0,
+  "relations": 33,
+  "corroborated": 13,
+  "contradiction": 2,
+  "reconciled": 18,
+  "unresolved": 0
+}

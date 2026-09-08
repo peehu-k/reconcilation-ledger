@@ -1,0 +1,233 @@
+[
+  {
+    "bucket": "contradiction",
+    "rule_code": "NONE",
+    "attribute_key": "corporate office address",
+    "relation_confidence": 0.315,
+    "explanation": "No contextual difference (period, scope, basis, unit, vintage) explains the gap: “Plot 5, Sector 44, Gurugram 122002” (01-delhivery-prospectus-2022-excerpt, p.1) vs “Plot No. 5, Sector 44, Gurugram, Haryana 122001” (02-delhivery-annual-report-fy24-excerpt, p.51)."
+  },
+  {
+    "bucket": "contradiction",
+    "rule_code": "NONE",
+    "attribute_key": "corporate office address",
+    "relation_confidence": 0.315,
+    "explanation": "No contextual difference (period, scope, basis, unit, vintage) explains the gap: “Plot No. 5, Sector-44, Gurugram, Haryana 122002” (02-delhivery-annual-report-fy24-excerpt, p.30) vs “Plot No. 5, Sector 44, Gurugram, Haryana 122001” (02-delhivery-annual-report-fy24-excerpt, p.51)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "real gdp growth",
+    "relation_confidence": 0.72675,
+    "explanation": "Independent sources agree: “6.5 per cent” (02-rbi-annual-report-2024-25-excerpt, p.8) and “6.5 percent” (03-imf-india-2025-article-iv-excerpt, p.3)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "real gdp growth",
+    "relation_confidence": 0.72675,
+    "explanation": "Independent sources agree: “6.5 per cent” (02-rbi-annual-report-2024-25-excerpt, p.8) and “6.5 percent” (03-imf-india-2025-article-iv-excerpt, p.10)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "real gdp growth",
+    "relation_confidence": 0.72675,
+    "explanation": "Independent sources agree: “6.5 percent” (03-imf-india-2025-article-iv-excerpt, p.3) and “6.5 percent” (03-imf-india-2025-article-iv-excerpt, p.10)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "real gdp growth",
+    "relation_confidence": 0.6863749999999998,
+    "explanation": "Independent sources agree: “6.5 per cent” (02-rbi-annual-report-2024-25-excerpt, p.8) and “6.5 per cent” (02-rbi-annual-report-2024-25-excerpt, p.23)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "real gdp growth",
+    "relation_confidence": 0.6863749999999998,
+    "explanation": "Independent sources agree: “6.5 per cent” (02-rbi-annual-report-2024-25-excerpt, p.23) and “6.5 percent” (03-imf-india-2025-article-iv-excerpt, p.3)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "real gdp growth",
+    "relation_confidence": 0.6863749999999998,
+    "explanation": "Independent sources agree: “6.5 per cent” (02-rbi-annual-report-2024-25-excerpt, p.23) and “6.5 percent” (03-imf-india-2025-article-iv-excerpt, p.10)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "registered office address",
+    "relation_confidence": 0.4275,
+    "explanation": "Independent sources agree: “N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, Indira Gandhi International Airport, New Delhi 110037 Delhi, India” (01-delhivery-prospectus-2022-excerpt, p.1) and “N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, IGI Airport, New Delhi 110037” (02-delhivery-annual-report-fy24-excerpt, p.49)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "corporate office address",
+    "relation_confidence": 0.4275,
+    "explanation": "Independent sources agree: “Plot 5, Sector 44, Gurugram 122002” (01-delhivery-prospectus-2022-excerpt, p.1) and “Plot No. 5, Sector-44, Gurugram, Haryana 122002” (02-delhivery-annual-report-fy24-excerpt, p.30)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "revenue",
+    "relation_confidence": 0.35624999999999996,
+    "explanation": "Independent sources agree: “81,415Mn” (02-delhivery-annual-report-fy24-excerpt, p.4) and “8,142 Cr” (03-delhivery-q4-fy24-earnings-presentation, p.6)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "revenue",
+    "relation_confidence": 0.342,
+    "explanation": "Independent sources agree: “81,415Mn” (02-delhivery-annual-report-fy24-excerpt, p.4) and “81,415.38 million” (02-delhivery-annual-report-fy24-excerpt, p.22)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "revenue",
+    "relation_confidence": 0.342,
+    "explanation": "Independent sources agree: “81,415.38 million” (02-delhivery-annual-report-fy24-excerpt, p.22) and “8,142 Cr” (03-delhivery-q4-fy24-earnings-presentation, p.6)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "ebitda",
+    "relation_confidence": 0.34199999999999997,
+    "explanation": "Independent sources agree: “1,266Mn” (02-delhivery-annual-report-fy24-excerpt, p.4) and “Rs. 127 Cr” (03-delhivery-q4-fy24-earnings-presentation, p.5)."
+  },
+  {
+    "bucket": "corroborated",
+    "rule_code": "EXACT",
+    "attribute_key": "ebitda margin",
+    "relation_confidence": 0.2375,
+    "explanation": "Independent sources agree: “1.6%” (02-delhivery-annual-report-fy24-excerpt, p.4) and “1.6%” (03-delhivery-q4-fy24-earnings-presentation, p.6)."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "ESTIMATE_VINTAGE",
+    "attribute_key": "real gdp growth",
+    "relation_confidence": 0.65025,
+    "explanation": "Same figure at different vintages: first_advance → later estimate; as-of 2025-01-30 vs 2025-03-31 - the number matured between publications, not a contradiction."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "ESTIMATE_VINTAGE",
+    "attribute_key": "foreign exchange reserves",
+    "relation_confidence": 0.65025,
+    "explanation": "Same figure at different vintages: as-of 2025-01-03 vs 2025-03-01 - the number matured between publications, not a contradiction."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "ESTIMATE_VINTAGE",
+    "attribute_key": "real gdp growth",
+    "relation_confidence": 0.65025,
+    "explanation": "Same figure at different vintages: first_advance → later estimate; as-of 2025-01-30 vs 2025-11-21 - the number matured between publications, not a contradiction."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "ESTIMATE_VINTAGE",
+    "attribute_key": "real gdp growth",
+    "relation_confidence": 0.65025,
+    "explanation": "Same figure at different vintages: first_advance → later estimate; as-of 2025-01-30 vs 2025-11-21 - the number matured between publications, not a contradiction."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "ESTIMATE_VINTAGE",
+    "attribute_key": "foreign exchange reserves",
+    "relation_confidence": 0.6358,
+    "explanation": "Same figure at different vintages: as-of 2025-01-03 vs 2025-10-01 - the number matured between publications, not a contradiction."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "ESTIMATE_VINTAGE",
+    "attribute_key": "foreign exchange reserves",
+    "relation_confidence": 0.6358,
+    "explanation": "Same figure at different vintages: as-of 2025-03-01 vs 2025-10-01 - the number matured between publications, not a contradiction."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "ESTIMATE_VINTAGE",
+    "attribute_key": "real gdp growth",
+    "relation_confidence": 0.6141249999999999,
+    "explanation": "Same figure at different vintages: first_advance → later estimate; as-of 2025-01-30 vs 2025-03-31 - the number matured between publications, not a contradiction."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "PERIOD",
+    "attribute_key": "revenue",
+    "relation_confidence": 0.405,
+    "explanation": "The figures cover different periods: one is FY:2023-24, the other Q4 FY:2023-24."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "PERIOD",
+    "attribute_key": "ebitda",
+    "relation_confidence": 0.36000000000000004,
+    "explanation": "The figures cover different periods: one is FY:2023-24, the other FY:2022-23."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "IDENTIFIER_REVISION",
+    "attribute_key": "corporate identity number",
+    "relation_confidence": 0.35624999999999996,
+    "explanation": "The identifiers are the same but for a format/prefix change (“U63090DL2011PLC221234” vs “L63090DL2011PLC221234”) between filings - a registration-status reclassification, not a conflicting value."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "PERIOD",
+    "attribute_key": "revenue",
+    "relation_confidence": 0.3375,
+    "explanation": "The figures cover different periods: one is FY:2023-24, the other Q4 FY:2023-24."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "PERIOD",
+    "attribute_key": "revenue",
+    "relation_confidence": 0.32400000000000007,
+    "explanation": "The figures cover different periods: one is FY:2023-24, the other Q4 FY:2023-24."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "PERIOD",
+    "attribute_key": "ebitda",
+    "relation_confidence": 0.324,
+    "explanation": "The figures cover different periods: one is FY:2023-24, the other FY:2022-23."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "PERIOD",
+    "attribute_key": "revenue",
+    "relation_confidence": 0.3168,
+    "explanation": "The figures cover different periods: one is FY:2023-24, the other FY:2022-23."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "PERIOD",
+    "attribute_key": "revenue",
+    "relation_confidence": 0.3168,
+    "explanation": "The figures cover different periods: one is FY:2023-24, the other FY:2022-23."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "PERIOD",
+    "attribute_key": "revenue",
+    "relation_confidence": 0.3168,
+    "explanation": "The figures cover different periods: one is FY:2022-23, the other FY:2023-24."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "PERIOD",
+    "attribute_key": "revenue",
+    "relation_confidence": 0.3168,
+    "explanation": "The figures cover different periods: one is FY:2022-23, the other Q4 FY:2023-24."
+  },
+  {
+    "bucket": "reconciled",
+    "rule_code": "TEMPORAL_STATUS",
+    "attribute_key": "board membership",
+    "relation_confidence": 0.315,
+    "explanation": "The status changed over time: as of 2022-05-14 “Non-Executive Nominee Director”; as of 2023-08-24 “resigned from the Board with effect from August 24, 2023”."
+  }
+]

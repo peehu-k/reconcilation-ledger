@@ -1,0 +1,86 @@
+# Golden reconciliation fixtures - the four required assignment cases plus guards.
+# Each entry: two normalized facts (a, b) -> expected bucket + rule_code.
+# Values mirror real starter-PDF figures.
+
+- name: CASE1_corroboration_cross_unit
+  a: {entity_key: delhivery, attribute_key: revenue, fact_kind: numeric, value_text: "8,142 Cr",
+      value_num: 81420000000.0, currency: INR, unit_canonical: currency_amount,
+      period_canonical: "FY:2023-24", doc_id: 1, source_page: 6, extraction_confidence: 0.7}
+  b: {entity_key: delhivery, attribute_key: revenue, fact_kind: numeric, value_text: "81,415.38 million",
+      value_num: 81415380000.0, unit_canonical: currency_amount,
+      period_canonical: "FY:2023-24", doc_id: 2, source_page: 22, extraction_confidence: 0.7}
+  expect: {bucket: corroborated}
+
+- name: CASE1_address_same_place_different_wording
+  a: {entity_key: delhivery, attribute_key: "registered office address", fact_kind: attribute,
+      value_text: "N24-N34, Air Cargo Logistics Centre-II, Indira Gandhi International Airport, New Delhi 110037",
+      doc_id: 1, source_page: 1, extraction_confidence: 0.8}
+  b: {entity_key: delhivery, attribute_key: "registered office address", fact_kind: attribute,
+      value_text: "N24-N34, Air Cargo Logistics Centre-II, IGI Airport, New Delhi 110037",
+      doc_id: 2, source_page: 49, extraction_confidence: 0.8}
+  expect: {bucket: corroborated}
+
+- name: CASE2_contradiction_pin_code
+  a: {entity_key: delhivery, attribute_key: "corporate office address", fact_kind: attribute,
+      value_text: "Plot 5, Sector 44, Gurugram 122002", doc_id: 1, source_page: 1, extraction_confidence: 0.85}
+  b: {entity_key: delhivery, attribute_key: "corporate office address", fact_kind: attribute,
+      value_text: "Plot No. 5, Sector 44, Gurugram, Haryana 122001", doc_id: 2, source_page: 51,
+      extraction_confidence: 0.85}
+  expect: {bucket: contradiction, rule_code: NONE}
+
+- name: CASE3_reconciled_estimate_vintage_gdp
+  a: {entity_key: india, attribute_key: "real gdp growth", fact_kind: numeric, value_text: "6.4 per cent",
+      value_num: 0.064, unit_canonical: ratio, period_canonical: "FY:2024-25",
+      estimate_status: first_advance, as_of_date: "2025-01-30", doc_id: 4, source_page: 4,
+      extraction_confidence: 0.8}
+  b: {entity_key: india, attribute_key: "real gdp growth", fact_kind: numeric, value_text: "6.5 per cent",
+      value_num: 0.065, unit_canonical: ratio, period_canonical: "FY:2024-25",
+      as_of_date: "2025-03-31", doc_id: 5, source_page: 8, extraction_confidence: 0.8}
+  expect: {bucket: reconciled, rule_code: ESTIMATE_VINTAGE}
+
+- name: CASE3_reconciled_asof_forex_reserves
+  a: {entity_key: india, attribute_key: "foreign exchange reserves", fact_kind: numeric,
+      value_text: "USD 634.6 billion", value_num: 634600000000.0, currency: USD,
+      unit_canonical: currency_amount, as_of_date: "2025-01-03", doc_id: 4, source_page: 31,
+      extraction_confidence: 0.8}
+  b: {entity_key: india, attribute_key: "foreign exchange reserves", fact_kind: numeric,
+      value_text: "$695 billion", value_num: 695000000000.0, currency: USD,
+      unit_canonical: currency_amount, as_of_date: "2025-10-01", doc_id: 6, source_page: 12,
+      extraction_confidence: 0.8}
+  expect: {bucket: reconciled, rule_code: ESTIMATE_VINTAGE}
+
+- name: CASE3_reconciled_by_period_revenue
+  a: {entity_key: delhivery, attribute_key: revenue, fact_kind: numeric, value_text: "8,142 Cr",
+      value_num: 81420000000.0, currency: INR, unit_canonical: currency_amount,
+      period_canonical: "FY:2023-24", doc_id: 3, source_page: 6, extraction_confidence: 0.7}
+  b: {entity_key: delhivery, attribute_key: revenue, fact_kind: numeric, value_text: "2,076 Cr",
+      value_num: 20760000000.0, currency: INR, unit_canonical: currency_amount,
+      period_canonical: "Q4 FY:2023-24", doc_id: 3, source_page: 7, extraction_confidence: 0.7}
+  expect: {bucket: reconciled, rule_code: PERIOD}
+
+- name: CASE3_reconciled_identifier_revision_cin
+  a: {entity_key: delhivery, attribute_key: "corporate identity number", fact_kind: attribute,
+      value_text: "U63090DL2011PLC221234", as_of_date: "2022-05-14", doc_id: 1, source_page: 1,
+      extraction_confidence: 0.9}
+  b: {entity_key: delhivery, attribute_key: "corporate identity number", fact_kind: attribute,
+      value_text: "L63090DL2011PLC221234", as_of_date: "2024-08-08", doc_id: 2, source_page: 30,
+      extraction_confidence: 0.9}
+  expect: {bucket: reconciled, rule_code: IDENTIFIER_REVISION}
+
+- name: CASE3_reconciled_temporal_status_director
+  a: {entity_key: "suvir suren sujan", attribute_key: "board membership", fact_kind: status,
+      value_text: "Non-Executive Nominee Director", as_of_date: "2022-05-14", doc_id: 1, source_page: 30,
+      extraction_confidence: 0.8}
+  b: {entity_key: "suvir suren sujan", attribute_key: "board membership", fact_kind: status,
+      value_text: "resigned from the Board with effect from August 24, 2023", as_of_date: "2023-08-24",
+      doc_id: 2, source_page: 33, extraction_confidence: 0.8}
+  expect: {bucket: reconciled, rule_code: TEMPORAL_STATUS}
+
+- name: GUARD_vintage_does_not_fire_on_agreement
+  a: {entity_key: india, attribute_key: "real gdp growth", fact_kind: numeric, value_text: "6.5 per cent",
+      value_num: 0.065, unit_canonical: ratio, period_canonical: "FY:2024-25", as_of_date: "2025-03-31",
+      doc_id: 5, source_page: 8, extraction_confidence: 0.8}
+  b: {entity_key: india, attribute_key: "real gdp growth", fact_kind: numeric, value_text: "6.5 percent",
+      value_num: 0.065, unit_canonical: ratio, period_canonical: "FY:2024-25", as_of_date: "2025-11-21",
+      doc_id: 6, source_page: 3, extraction_confidence: 0.8}
+  expect: {bucket: corroborated}

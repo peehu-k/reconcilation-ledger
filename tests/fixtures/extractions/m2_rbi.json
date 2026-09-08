@@ -1,0 +1,25 @@
+{
+  "title_contains": "rbi-annual-report",
+  "_note": "Hand-verified extractions for the RBI Annual Report 2024-25 (published ~May 2025).",
+  "pages": {
+    "8": [
+      {"fact_kind": "numeric", "entity_text": "India", "attribute_label": "real GDP growth",
+       "value_text": "6.5 per cent", "unit_text": "per cent", "period_text": "2024-25",
+       "quote": "real gross domestic product (GDP)3 growth moderated to 6.5 per cent in 2024-25",
+       "self_confidence": 0.9}
+    ],
+    "23": [
+      {"fact_kind": "numeric", "entity_text": "India", "attribute_label": "real GDP growth",
+       "value_text": "6.5 per cent", "unit_text": "per cent", "period_text": "2024-25",
+       "estimate_status_text": "estimated to have grown",
+       "quote": "GDP at constant prices – is estimated to have grown by 6.5 per cent in 2024-25, as compared",
+       "self_confidence": 0.85}
+    ],
+    "12": [
+      {"fact_kind": "numeric", "entity_text": "India", "attribute_label": "foreign exchange reserves",
+       "value_text": "US$ 668.3 billion", "unit_text": "billion", "as_of_text": "as at end-March 2025",
+       "quote": "ample forex reserves at US$ 668.3 billion (as at end-March 2025)",
+       "self_confidence": 0.9}
+    ]
+  }
+}

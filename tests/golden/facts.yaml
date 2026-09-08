@@ -1,0 +1,63 @@
+# Golden normalization fixtures. Each `raw` is what an extractor would emit for a
+# verbatim span of a starter PDF; `expect` is the canonical Fact it must normalize to.
+# Run offline by tests/test_golden.py - no LLM involved.
+
+- name: delhivery_fy24_revenue_crore
+  raw: {fact_kind: numeric, entity_text: "Delhivery Limited", attribute_label: "revenue from services",
+        value_text: "8,142 Cr", unit_text: "Cr", period_text: "FY24", quote: "8,142 Cr"}
+  ctx: {primary_entity_key: "delhivery", published_date: "2024-05-17"}
+  expect: {entity_key: "delhivery", attribute_key: "revenue", value_num: 81420000000.0,
+           currency: "INR", unit_canonical: "currency_amount", period_canonical: "FY:2023-24"}
+
+- name: delhivery_fy24_revenue_million
+  raw: {fact_kind: numeric, entity_text: "the Company", attribute_label: "revenue from operations",
+        value_text: "81,415.38 million", unit_text: "million", period_text: "FY24",
+        quote: "81,415.38 million"}
+  ctx: {primary_entity_key: "delhivery", published_date: "2024-08-08"}
+  expect: {entity_key: "delhivery", attribute_key: "revenue", value_num: 81415380000.0,
+           unit_canonical: "currency_amount", period_canonical: "FY:2023-24"}
+
+- name: gdp_growth_first_advance
+  raw: {fact_kind: numeric, entity_text: "India", attribute_label: "real GDP growth",
+        value_text: "6.4 per cent", unit_text: "per cent", period_text: "FY25",
+        estimate_status_text: "first advance estimates", quote: "grow by 6.4 per cent in FY25"}
+  ctx: {published_date: "2025-01-30"}
+  expect: {entity_key: "india", attribute_key: "real gdp growth", value_num: 0.064,
+           unit_canonical: "ratio", period_canonical: "FY:2024-25", estimate_status: "first_advance",
+           as_of_date: "2025-01-30"}
+
+- name: forex_reserves_point_date
+  raw: {fact_kind: numeric, entity_text: "India", attribute_label: "foreign exchange reserves",
+        value_text: "USD 634.6 billion", unit_text: "billion", as_of_text: "as on 3 January 2025",
+        quote: "USD 634.6 billion as on 3 January 2025"}
+  ctx: {published_date: "2025-01-30"}
+  expect: {entity_key: "india", attribute_key: "foreign exchange reserves", value_num: 634600000000.0,
+           currency: "USD", unit_canonical: "currency_amount", as_of_date: "2025-01-03"}
+
+- name: accounting_negative_ebitda
+  raw: {fact_kind: numeric, entity_text: "Delhivery Limited", attribute_label: "EBITDA",
+        value_text: "Rs. (452 Cr)", unit_text: "Cr", period_text: "FY23", quote: "Rs. (452 Cr) in FY23"}
+  ctx: {primary_entity_key: "delhivery"}
+  expect: {value_num: -4520000000.0, currency: "INR", unit_canonical: "currency_amount",
+           period_canonical: "FY:2022-23"}
+
+- name: pin_code_is_text_not_number
+  raw: {fact_kind: attribute, entity_text: "Delhivery Limited", attribute_label: "corporate office address",
+        value_text: "Plot No. 5, Sector 44, Gurugram, Haryana 122001",
+        quote: "Plot No. 5, Sector 44, Gurugram, Haryana 122001"}
+  ctx: {primary_entity_key: "delhivery"}
+  expect: {value_num: null, unit_canonical: "text", attribute_key: "corporate office address"}
+
+- name: director_status_is_text
+  raw: {fact_kind: status, entity_text: "Mr. Suvir Suren Sujan", attribute_label: "board membership",
+        value_text: "resigned from the Board with effect from August 24, 2023",
+        as_of_text: "August 24, 2023", quote: "resigned from the Board with effect from August 24, 2023"}
+  ctx: {published_date: "2024-08-08"}
+  expect: {entity_key: "suvir suren sujan", attribute_key: "board membership", value_num: null,
+           as_of_date: "2023-08-24"}
+
+- name: footnote_marker_stripped_from_value
+  raw: {fact_kind: numeric, entity_text: "Delhivery Limited", attribute_label: "revenue growth",
+        value_text: "12.7%(2)", unit_text: "%", period_text: "FY24", quote: "YoY: 12.7%(2)"}
+  ctx: {primary_entity_key: "delhivery"}
+  expect: {value_num: 0.127, unit_canonical: "ratio"}

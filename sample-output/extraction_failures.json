@@ -1,0 +1,22 @@
+{
+  "rejected_proposals": [
+    {
+      "value": "Rs. 5 Cr",
+      "attribute": "profit after tax",
+      "unverifiable_quote": "Delhivery reported a net profit of 5 crore rupees in fiscal 2024.",
+      "page": 17,
+      "doc": "03-delhivery-q4-fy24-earnings-presentation"
+    }
+  ],
+  "sanity_flagged_facts": [
+    {
+      "value": "2,491.86 million",
+      "flags": [
+        "sign_suspect"
+      ],
+      "doc": "02-delhivery-annual-report-fy24-excerpt",
+      "page": 36,
+      "quote": "Loss for the year decreased to 2,491.86 million for FY24 from 10,077.79 million for FY23."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "title_contains": "earnings-presentation",
+  "_note": "Hand-verified extractions for the Delhivery Q4 & FY24 earnings deck. Every quote is a verbatim span of the PyMuPDF text for that page; the quote guard re-checks it at ingest.",
+  "pages": {
+    "6": [
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "revenue from services",
+       "value_text": "8,142 Cr", "unit_text": "Cr", "period_text": "FY24",
+       "quote": "8,142 Cr", "self_confidence": 0.9},
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "EBITDA",
+       "value_text": "127Cr", "unit_text": "Cr", "period_text": "FY24",
+       "quote": "127Cr", "self_confidence": 0.85},
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "EBITDA margin",
+       "value_text": "1.6%", "unit_text": "%", "period_text": "FY24",
+       "quote": "EBITDA / EBITDA margin", "self_confidence": 0.5}
+    ],
+    "7": [
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "revenue from services",
+       "value_text": "2,076 Cr", "unit_text": "Cr", "period_text": "Q4 FY24",
+       "quote": "2,076 Cr", "self_confidence": 0.9}
+    ],
+    "5": [
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "EBITDA",
+       "value_text": "Rs. 127 Cr", "unit_text": "Cr", "period_text": "FY24",
+       "quote": "FY24 EBITDA increased by Rs. 578 Cr to Rs. 127 Cr from Rs. (452 Cr) in FY23", "self_confidence": 0.8},
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "EBITDA",
+       "value_text": "Rs. (452 Cr)", "unit_text": "Cr", "period_text": "FY23",
+       "quote": "FY24 EBITDA increased by Rs. 578 Cr to Rs. 127 Cr from Rs. (452 Cr) in FY23", "self_confidence": 0.8}
+    ],
+    "17": [
+      {"fact_kind": "numeric", "entity_text": "Delhivery Limited", "attribute_label": "profit after tax",
+       "value_text": "Rs. 5 Cr", "unit_text": "Cr", "period_text": "FY24",
+       "quote": "Delhivery reported a net profit of 5 crore rupees in fiscal 2024.",
+       "self_confidence": 0.55,
+       "_intent": "CASE 4 - a hallucinated proposal (this sentence is NOT in the deck). The quote guard rejects it; it never enters the ledger. With live Ollama the same guard rejects real misquotes from the scrambled P&L table on this slide."}
+    ]
+  }
+}

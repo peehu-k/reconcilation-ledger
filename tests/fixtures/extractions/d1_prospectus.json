@@ -1,0 +1,23 @@
+{
+  "title_contains": "prospectus",
+  "_note": "Hand-verified extractions for the Delhivery 2022 Prospectus.",
+  "pages": {
+    "1": [
+      {"fact_kind": "attribute", "entity_text": "Delhivery Limited", "attribute_label": "corporate identity number",
+       "value_text": "U63090DL2011PLC221234",
+       "quote": "CORPORATE IDENTITY NUMBER: U63090DL2011PLC221234", "self_confidence": 0.95},
+      {"fact_kind": "attribute", "entity_text": "Delhivery Limited", "attribute_label": "corporate office address",
+       "value_text": "Plot 5, Sector 44, Gurugram 122002",
+       "quote": "Plot 5, Sector 44, Gurugram 122002", "self_confidence": 0.88},
+      {"fact_kind": "attribute", "entity_text": "Delhivery Limited", "attribute_label": "registered office address",
+       "value_text": "N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, Indira Gandhi International Airport, New Delhi 110037 Delhi, India",
+       "quote": "N24-N34, S24-S34, Air Cargo Logistics Centre-II, Opposite Gate 6 Cargo Terminal, Indira Gandhi International Airport, New Delhi 110037 Delhi, India",
+       "self_confidence": 0.9}
+    ],
+    "30": [
+      {"fact_kind": "status", "entity_text": "Suvir Suren Sujan", "attribute_label": "board membership",
+       "value_text": "Non-Executive Nominee Director",
+       "quote": "Suvir Suren Sujan(3) Non-Executive Nominee Director", "self_confidence": 0.85}
+    ]
+  }
+}
